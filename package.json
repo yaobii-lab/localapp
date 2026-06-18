@@ -1,0 +1,58 @@
+{
+  "name": "@yaobii/localapp",
+  "version": "0.1.0",
+  "description": "Open any local webtool with one command — vibe-coded artifacts, dev servers, agent-built scripts. macOS CLI, agent-native.",
+  "keywords": [
+    "localhost",
+    "dev-server",
+    "launcher",
+    "process-manager",
+    "cli",
+    "vibe-coding",
+    "ai-coding",
+    "agentic",
+    "coding-agent",
+    "ai-native",
+    "artifacts",
+    "claude-code",
+    "cursor",
+    "ai-agents",
+    "agent-tools",
+    "macos"
+  ],
+  "homepage": "https://github.com/yaobii-lab/localapp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaobii-lab/localapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yaobii-lab/localapp/issues"
+  },
+  "license": "MIT",
+  "author": "YBloom",
+  "type": "module",
+  "bin": {
+    "localapp": "dist/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "build": "tsc",
+    "test": "vitest run",
+    "prepublishOnly": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.10",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "vitest": "^1.6.0"
+  }
+}

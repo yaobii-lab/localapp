@@ -2,7 +2,9 @@
 
 # localapp
 
-### 看清 Mac 上跑着哪些网页工具，按名字重新打开任何一个。
+### 一行命令，打开你做过的任何本机网页工具。
+
+*你 vibe 出来的小工具、所有的 dev server、agent 顺手写的脚本——都被记住，都能被再次打开。Mac 上的"启动台"，给你的本机 artifact 用。*
 
 [![npm version](https://img.shields.io/npm/v/%40yaobii%2Flocalapp?color=cb3837&logo=npm)](https://www.npmjs.com/package/@yaobii/localapp)
 [![node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)](https://nodejs.org)

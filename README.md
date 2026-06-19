@@ -2,7 +2,9 @@
 
 # localapp
 
-### See every local web app running on your Mac. Reopen any one by name.
+### Open any local webtool with one command.
+
+*LaunchPad for the vibe-coded artifacts on your Mac — every dev server, every agent-built script, remembered and re-openable.*
 
 [![npm version](https://img.shields.io/npm/v/%40yaobii%2Flocalapp?color=cb3837&logo=npm)](https://www.npmjs.com/package/@yaobii/localapp)
 [![node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)](https://nodejs.org)

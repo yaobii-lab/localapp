@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.2] — 2026-06-28
+
+### Added
+
+- `localapp status <port>` — explain one port's listener, LocalApp record, and next action. Use `--json` for agents.
+
 ### Changed
 
 - GitHub Releases now publish to npm through Trusted Publishing and short-lived OIDC credentials after version, test, and build checks pass.
+- Updated npm discovery metadata and README copy for the 0.2.x line.
 
 ## [0.2.0] — 2026-06-19
 
@@ -43,6 +50,7 @@ Initial public release.
 - Annotate, don't intercept — an agent that ignores localapp does not break it; its server simply appears as an un-annotated port.
 - No daemon, no GUI, no background process. Reads on demand, sends nothing off the machine.
 
-[Unreleased]: https://github.com/yaobii-lab/localapp/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/yaobii-lab/localapp/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/yaobii-lab/localapp/compare/v0.2.0...v0.2.2
 [0.2.0]: https://github.com/yaobii-lab/localapp/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/yaobii-lab/localapp/releases/tag/v0.1.0

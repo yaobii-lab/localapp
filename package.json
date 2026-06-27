@@ -1,6 +1,6 @@
 {
   "name": "@yaobii/localapp",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Find, reopen, and manage local dev servers and localhost web tools on macOS. Built for Claude Code, Codex, and Cursor.",
   "keywords": [
     "localhost",

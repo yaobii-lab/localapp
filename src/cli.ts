@@ -3,6 +3,7 @@ import { runAdd, type AddOptions } from "./commands/add.js";
 import { runAdopt, type AdoptOptions } from "./commands/adopt.js";
 import { runOpen, type OpenOptions } from "./commands/open.js";
 import { runLocalApp, type RunOptions } from "./commands/run.js";
+import { runStatus, type StatusOptions } from "./commands/status.js";
 import { runInit, type AgentName, type InitOptions } from "./commands/init.js";
 import { readPackageInfo, runSetup, type SetupOptions } from "./commands/setup.js";
 import { filterServices, type ServiceStatusFilter } from "./core/filter.js";
@@ -22,13 +23,14 @@ type CliOptions =
   | AddCliOptions
   | AdoptCliOptions
   | OpenCliOptions
+  | StatusCliOptions
   | InitCliOptions
   | SetupCliOptions
   | VersionOptions;
 
 interface HelpOptions {
   command: "help";
-  topic: "root" | "ls" | "run" | "add" | "adopt" | "open" | "init" | "setup";
+  topic: "root" | "ls" | "run" | "add" | "adopt" | "open" | "status" | "init" | "setup";
 }
 
 interface LsOptions {
@@ -52,6 +54,10 @@ interface AdoptCliOptions extends AdoptOptions {
 
 interface OpenCliOptions extends OpenOptions {
   command: "open";
+}
+
+interface StatusCliOptions extends StatusOptions {
+  command: "status";
 }
 
 interface InitCliOptions extends Omit<InitOptions, "home"> {
@@ -119,6 +125,11 @@ async function main(argv: string[]): Promise<void> {
     return;
   }
 
+  if (options.command === "status") {
+    process.exitCode = await runStatus(options, { scanListeningPorts, readProjection });
+    return;
+  }
+
   const [osScan, annotations, currentProject] = await Promise.all([
     scanListeningPorts(),
     readProjection(),
@@ -152,6 +163,7 @@ function parseArgs(argv: string[]): CliOptions {
   if (command === "add") return parseAddArgs(flags);
   if (command === "adopt") return parseAdoptArgs(flags);
   if (command === "open") return parseOpenArgs(flags);
+  if (command === "status") return parseStatusArgs(flags);
   if (command === "init") return parseInitArgs(flags);
   if (command === "setup") return parseSetupArgs(flags);
   if (command !== "ls" && command !== "list") {
@@ -215,9 +227,10 @@ function parseHelpArgs(args: string[]): HelpOptions {
     topic === "run" ||
     topic === "add" ||
     topic === "adopt" ||
-    topic === "open"
-    || topic === "init"
-    || topic === "setup"
+    topic === "open" ||
+    topic === "status" ||
+    topic === "init" ||
+    topic === "setup"
   ) {
     return { command: "help", topic: topic === "list" ? "ls" : topic };
   }
@@ -302,6 +315,30 @@ function parseOpenArgs(args: string[]): OpenCliOptions | HelpOptions {
     throw new CliError(`Unknown option: ${flag}`);
   }
   return { command: "open", app, foreground };
+}
+
+function parseStatusArgs(args: string[]): StatusCliOptions | HelpOptions {
+  if (args.some(isHelpFlag)) return { command: "help", topic: "status" };
+  const [rawPort, ...flags] = args;
+  if (!rawPort) throw new CliError("Missing port");
+  const port = parsePositiveInteger(rawPort);
+  if (port === null) throw new CliError(`Invalid port: ${rawPort}`);
+
+  const options: StatusCliOptions = {
+    command: "status",
+    port,
+    json: false
+  };
+
+  for (const flag of flags) {
+    if (flag === "--json") {
+      options.json = true;
+      continue;
+    }
+    throw new CliError(`Unknown option: ${flag}`);
+  }
+
+  return options;
 }
 
 function parseRunArgs(args: string[]): RunCliOptions | OpenCliOptions | HelpOptions {
@@ -589,6 +626,20 @@ function renderHelp(topic: HelpOptions["topic"]): string {
     ].join("\n");
   }
 
+  if (topic === "status") {
+    return [
+      "Usage: localapp status <port> [options]",
+      "",
+      "Explain who owns one localhost port and how to recover or adopt it.",
+      "This reports listener and registry facts only; it does not probe HTTP health.",
+      "",
+      "Options:",
+      "  --json              Print valid JSON for agents",
+      "  -h, --help          Show this help",
+      ""
+    ].join("\n");
+  }
+
   if (topic === "ls") {
     return [
       "Usage: localapp ls [options]",
@@ -616,6 +667,7 @@ function renderHelp(topic: HelpOptions["topic"]): string {
     "  add -- <cmd>        Register a service without starting it",
     "  open <name>         Same as `run <name>` — kept as a familiar alias",
     "  adopt <port>        Annotate an already-listening local service in place",
+    "  status <port>       Explain one port's listener, registry record, and next action",
     "  init                Connect supported coding agents to LocalApp",
     "  setup               Install the CLI and connect detected agents",
     "",
@@ -625,6 +677,7 @@ function renderHelp(topic: HelpOptions["topic"]): string {
     "  localapp run --note \"checkout redesign\" -- npm run dev",
     "  localapp add --note \"个人记忆库\" -- npm run dev",
     "  localapp adopt 8765 --note \"SakuraCat patch panel\" --keep",
+    "  localapp status 8765 --json",
     "  localapp init --status",
     "",
     "Use localapp <command> --help for command-specific help.",

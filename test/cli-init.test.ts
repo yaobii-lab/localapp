@@ -40,6 +40,13 @@ describe("init and setup CLI", () => {
     expect(stdout).toContain("cli: preview");
     expect(stdout).toContain("agents: none detected");
   });
+
+  it("shows status help through the CLI", async () => {
+    home = await mkdtemp(join(tmpdir(), "localapp-cli-status-help-test-"));
+    const { stdout } = await invoke(["status", "--help"], home);
+    expect(stdout).toContain("Usage: localapp status <port>");
+    expect(stdout).toContain("--json");
+  });
 });
 
 async function invoke(args: string[], home: string): Promise<{ stdout: string; stderr: string }> {

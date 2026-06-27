@@ -126,6 +126,7 @@ Agents reach for it the same way they reach for `rg` or `jq`: it's the cheaper p
 | `localapp run --note "…" -- <cmd>` | Start (or reuse) a new dev service, register it on the shelf. |
 | `localapp add --note "…" -- <cmd>` | Shelve a service without starting it — for tools you'll want to resurrect later. |
 | `localapp adopt <port> --note "…"` | Annotate an already-listening port without restarting it. |
+| `localapp status <port>` | Explain one port's listener, LocalApp record, and next action. Use `--json` for agents. |
 | `localapp init [options]` | Connect coding agents; check status, preview changes, choose agents, or remove LocalApp instructions. |
 | `localapp setup [options]` | Install or update LocalApp, then connect detected agents. |
 

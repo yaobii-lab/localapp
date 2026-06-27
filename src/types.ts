@@ -48,6 +48,21 @@ export interface Service {
   lastSeenAt: string | null;
 }
 
+export type PortStatusState =
+  | "managed_running"
+  | "unmanaged_running"
+  | "not_listening_with_record"
+  | "free";
+
+export interface PortStatus {
+  port: number;
+  state: PortStatusState;
+  listener: ListeningPort | null;
+  service: Service | null;
+  recentRecords: Service[];
+  suggestedActions: string[];
+}
+
 export interface RunCommand {
   (command: string, args: string[]): Promise<string>;
 }

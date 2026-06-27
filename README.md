@@ -2,9 +2,9 @@
 
 # localapp
 
-### Open any local webtool with one command.
+### Find and reopen forgotten localhost tools.
 
-*LaunchPad for the vibe-coded artifacts on your Mac — every dev server, every agent-built script, remembered and re-openable.*
+*LaunchPad for localhost tools on your Mac: dev servers, AI-built scripts, and Claude Code, Codex, or Cursor artifacts remembered and re-openable.*
 
 [![npm version](https://img.shields.io/npm/v/%40yaobii%2Flocalapp?color=cb3837&logo=npm)](https://www.npmjs.com/package/@yaobii/localapp)
 [![node](https://img.shields.io/badge/node-%3E%3D20-339933?logo=node.js&logoColor=white)](https://nodejs.org)
@@ -17,6 +17,8 @@
 </div>
 
 ![LocalApp lists local web tools and reopens one by name](./assets/readme/terminal-demo.gif)
+
+Forgot which folder started `localhost:5173`? LocalApp tells you and reopens it.
 
 ## Install
 
@@ -131,6 +133,28 @@ Agents reach for it the same way they reach for `rg` or `jq`: it's the cheaper p
 
 Run `localapp <command> --help` for per-command options.
 
+## FAQ
+
+### How do I find which project owns `localhost:5173`?
+
+Run `localapp status 5173`. LocalApp reads the live listener from macOS, checks its LocalApp record, and explains the project, command, URL, and next action when it can.
+
+### How do I reopen a forgotten local dev server?
+
+Use `localapp run <name>` or `localapp open <name>`. If the service is still healthy, LocalApp prints the URL. If it is stopped, LocalApp replays the saved command in the saved directory.
+
+### How is LocalApp different from `lsof`?
+
+`lsof` tells you which process owns a port. LocalApp keeps that OS truth and adds project meaning: name, cwd, command, note, source, URL, and whether the service is healthy.
+
+### How is LocalApp different from `pm2`?
+
+`pm2` manages long-running processes. LocalApp is a lightweight shelf for local web tools and dev servers. It reads live state on demand and does not try to supervise, restart, or deploy your app.
+
+### Can Claude Code, Codex, or Cursor reuse the same dev server?
+
+Yes. `localapp setup` connects supported coding agents so they can inspect LocalApp first, reuse a healthy server, and avoid starting duplicate localhost services.
+
 ## What this is not
 
 - **Not a deployment platform.** It never touches `package.json`, framework config, Dockerfiles, or Vercel/Railway/Netlify settings.
@@ -143,4 +167,4 @@ LocalApp recognizes and supports the [LINUX DO](https://linux.do) community.
 
 ## License
 
-[MIT](./LICENSE) © YBloom
+[MIT](./LICENSE) © yaobii

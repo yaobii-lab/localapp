@@ -1,7 +1,7 @@
 {
   "name": "@yaobii/localapp",
-  "version": "0.2.0",
-  "description": "Open any local webtool with one command — vibe-coded artifacts, dev servers, agent-built scripts. macOS CLI, agent-native.",
+  "version": "0.2.1",
+  "description": "Find, reopen, and manage local dev servers and localhost web tools on macOS. Built for Claude Code, Codex, and Cursor.",
   "keywords": [
     "localhost",
     "dev-server",
@@ -29,7 +29,7 @@
     "url": "https://github.com/yaobii-lab/localapp/issues"
   },
   "license": "MIT",
-  "author": "YBloom",
+  "author": "yaobii",
   "type": "module",
   "bin": {
     "localapp": "dist/cli.js"
